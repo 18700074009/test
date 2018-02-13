@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>v-for 演示</h1>
+    <hr>
+    <div id="app">
+        <h4>简单数字数组演示</h4>
+        <ul>
+            <!-- 简单数字数组演示 -->
+            <li v-for="num in sortArr">
+                {{num}}
+            </li>
+        </ul>
+        <hr>
+        <!-- 数组包含对象演示 -->
+        <h4>数组包含对象演示</h4>
+        <ul>
+            <li v-for="(stu,count) in sortStudents">
+                {{count}}: {{stu.name}} - {{stu.age}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el:"#app",
+            data:{
+               arr:[51,62,71,67,12,64,7],
+               students:[
+                   {name:'zhang',age:52},
+                   {name:'li',age:15},
+                   {name:'wang',age:35},
+                   {name:'zhao',age:74},
+                   {name:'qian',age:66}
+               ]
+            },
+            //排序
+            computed:{
+                sortArr:function(){
+                    return this.arr.sort(sortNum);
+                },
+                sortStudents:function(){
+                    return sortByKey(this.students,'age');
+                }
+            }
+        });
+        //自定义排序
+        function sortNum(a,b){
+            return a-b;
+        };
+        //自定义排序2，array为要排序的数组，key为要排序的对象属性Key
+        function sortByKey(array,key){
+            return array.sort(function(a,b){
+                var x = a[key];
+                var y = b[key];
+                return ((x<y)?-1:((x>y)?1:0));
+            })
+        };
+    </script>
+</body>
+</html>
